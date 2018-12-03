@@ -258,8 +258,6 @@ var sketchProc=function(processingInstance){ with (processingInstance){
         this.destination = [];
         
         this.step = new PVector(0, 0);
-        this.wanderAngle = random(0, PI);
-        this.wanderDist = random(70, 100);
         
         this.pointsa = [];
         this.p2a = [];
@@ -442,7 +440,7 @@ var sketchProc=function(processingInstance){ with (processingInstance){
             }
             closestIntersect.push(angle);
             intersects.push(closestIntersect);
-        }
+        }        
 
         intersects = intersects.sort(function(a, b) {
             return a[2] - b[2];
@@ -482,16 +480,21 @@ var sketchProc=function(processingInstance){ with (processingInstance){
 
         fill(255, 255, 0, 50);
         noStroke();
-        beginShape();
-        vertex(this.position.x + tMapSize/2*this.scale, this.position.y + tMapSize/2*this.scale);
-        for (var i = 0; i < intersects.length; i++) {
-            if (intersects[i][0].x < 1)
-                continue;
-            
-            vertex(intersects[i][0].x, intersects[i][0].y);
+        if (this.scale === 2) {
+            arc(tMapSize/2*this.scale + this.position.x, tMapSize/2*this.scale + this.position.y, this.sight, this.sight, -this.fov/2 + this.angle, this.fov/2 + this.angle);
         }
-        vertex(this.position.x + tMapSize/2*this.scale, this.position.y + tMapSize/2*this.scale);
-        endShape();
+        else {
+            beginShape();
+            vertex(this.position.x + tMapSize/2*this.scale, this.position.y + tMapSize/2*this.scale);
+            for (var i = 0; i < intersects.length; i++) {
+                if (intersects[i][0].x < 1)
+                    continue;
+                
+                vertex(intersects[i][0].x, intersects[i][0].y);
+            }
+            vertex(this.position.x + tMapSize/2*this.scale, this.position.y + tMapSize/2*this.scale);
+            endShape();
+        }
     
         pushMatrix();
         translate(this.position.x, this.position.y);
@@ -607,7 +610,6 @@ var sketchProc=function(processingInstance){ with (processingInstance){
                 break;
             case 83:
                 player.speed += 0.1;
-                console.log(player.speed);
                 break;
             case 67:
                 guards[1].sight -= 30;
@@ -864,7 +866,7 @@ var sketchProc=function(processingInstance){ with (processingInstance){
     
     var initLevel = function() {
         guards.push(new guardObj(4*tMapSize, 11*tMapSize));
-        guards[1].patrolPath.push(new Node(2, 13));
+        guards[1].patrolPath.push(new Node(3, 14));
         guards[1].patrolPath.push(new Node(9, 13));
         guards[1].patrolPath.push(new Node(6, 10));
         guards.push(new guardObj(6*tMapSize, 4*tMapSize));
