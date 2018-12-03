@@ -973,9 +973,9 @@ var sketchProc=function(processingInstance){ with (processingInstance){
             
             if (player.position.x > 350 && player.position.y > 350) { state = 3; }
             
-            fill(255, 0, 0);
-            text(Math.floor(mouseX/tMapSize), 50, 310);
-            text(Math.floor(mouseY/tMapSize), 50, 330);
+            // fill(255, 0, 0);
+            // text(Math.floor(mouseX/tMapSize), 50, 310);
+            // text(Math.floor(mouseY/tMapSize), 50, 330);
         }
         else if (state === 2) {
             fill(220, 0, 0);
